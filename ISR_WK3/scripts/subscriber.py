@@ -7,7 +7,7 @@ def process_subscriber_msg(data):
 
 def create_subscriber():
   rospy.init_node('subscriber_node')
-  rospy.Subscriber("publisher_1", String, callback)
+  rospy.Subscriber("publisher_1", String, process_subscriber_msg)
 
 
 if __name__ == '__main__':
