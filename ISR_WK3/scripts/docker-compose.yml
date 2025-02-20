@@ -4,25 +4,25 @@ services:
     command: roscore
     ports:
       - "11311:11311"
-  
+
   publisher:
     image: ros:noetic-ros-core
-    depends_on:
-      - rosmaster
     environment:
       - ROS_MASTER_URI=http://rosmaster:11311
       - ROS_HOSTNAME=publisher
     volumes:
       - ./publisher.py:/app/publisher.py
     command: bash -c "source /opt/ros/noetic/setup.bash && python3 /app/publisher.py"
-  
-  subscriber:
-    image: ros:noetic-ros-core
     depends_on:
       - rosmaster
+
+  subscriber:
+    image: ros:noetic-ros-core
     environment:
       - ROS_MASTER_URI=http://rosmaster:11311
       - ROS_HOSTNAME=subscriber
     volumes:
       - ./subscriber.py:/app/subscriber.py
     command: bash -c "source /opt/ros/noetic/setup.bash && python3 /app/subscriber.py"
+    depends_on:
+      - publisher
